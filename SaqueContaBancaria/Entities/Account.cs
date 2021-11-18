@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaqueContaBancaria.Entities.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,6 +24,22 @@ namespace SaqueContaBancaria.Entities
             WithdrawLimit = withdrawLimit;
         }
 
+        public void Deposit(double amount)
+        {
+            Balance = Balance + amount;
+        }
 
+        public void WithDraw(double amount)
+        {
+            if (amount > WithdrawLimit)
+            {
+                throw new DomainException("The amount exceeds withdraw limit");
+            }
+            if (Balance <= amount)
+            {
+                throw new DomainException("Not enought balance");
+            }
+            Balance = Balance - amount;
+        }
     }
 }
